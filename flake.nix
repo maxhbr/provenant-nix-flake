@@ -7,32 +7,14 @@
   };
 
   outputs = { self, nixpkgs, flake-utils }:
+    let
+      srcInfo = builtins.fromJSON (builtins.readFile ./srcInfo.json);
+    in
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-
-        version = "0.1.14";
-
-        srcInfo = {
-          x86_64-linux = {
-            url = "https://github.com/mstykow/provenant/releases/download/v${version}/provenant-linux-x86_64.tar.gz";
-            hash = "sha256-2rsYd4d3sXVPQf5MRKrwq8p5d2UTRWJLX/qgtirRhhc=";
-          };
-          aarch64-linux = {
-            url = "https://github.com/mstykow/provenant/releases/download/v${version}/provenant-linux-aarch64.tar.gz";
-            hash = "sha256-U9otuFvAQUJ1LXULw1fjL9lYB+cAZp+jP/awPHhBo+s=";
-          };
-          x86_64-darwin = {
-            url = "https://github.com/mstykow/provenant/releases/download/v${version}/provenant-macos-x86_64.tar.gz";
-            hash = "sha256-ih6PxyHOCvzQx6McaHBAN31kbsZnOn8hOn43SrRvMTk=";
-          };
-          aarch64-darwin = {
-            url = "https://github.com/mstykow/provenant/releases/download/v${version}/provenant-macos-aarch64.tar.gz";
-            hash = "sha256-XybPoXtWGK2cnzim8DpeuxIURhEEabhO0OGzejFB0ds=";
-          };
-        };
-
-        info = srcInfo.${system};
+        version = srcInfo.version;
+        info = srcInfo.platforms.${system};
 
         provenant =
           if pkgs.stdenv.isLinux then
@@ -66,7 +48,7 @@
                   description = "Provenant - supply chain attestation tool";
                   homepage = "https://github.com/mstykow/provenant";
                   license = licenses.asl20;
-                  platforms = builtins.attrNames srcInfo;
+                  platforms = builtins.attrNames srcInfo.platforms;
                   mainProgram = "provenant";
                 };
               }
@@ -94,7 +76,7 @@
                   description = "Provenant - supply chain attestation tool";
                   homepage = "https://github.com/mstykow/provenant";
                   license = licenses.asl20;
-                  platforms = builtins.attrNames srcInfo;
+                  platforms = builtins.attrNames srcInfo.platforms;
                   mainProgram = "provenant";
                 };
               };
