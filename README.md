@@ -33,4 +33,6 @@ Add this flake as an input and apply its overlay, then include `provenant` in `s
 
 Then `nixos-rebuild switch --flake .#` — `provenant` is on `PATH`.
 
+# License
+
 Licensed under **Apache License 2.0** — see [LICENSE](./LICENSE).
