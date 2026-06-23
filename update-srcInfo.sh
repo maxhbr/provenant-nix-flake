@@ -60,7 +60,7 @@ for entry in "${entries[@]}"; do
     --arg platform "$nix_platform" \
     --arg url     "$url" \
     --arg hash    "$sri_hash" \
-    '{version: .version, platforms: .platforms + {"\($platform)": {url: $url, hash: $hash}}}')
+    '. as $root | {version: .version, platforms: (.platforms + {("\($platform)"): {url: $url, hash: $hash}})}')
 
   echo "  ✓ ${nix_platform}: ${sri_hash}"
 done
