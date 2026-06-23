@@ -12,7 +12,7 @@
 
       # Convert "0.1.14" -> "0_1_14" for valid Nix attribute names
       versionToAttrName = version:
-        builtins.replaceStrings ["."] ["_"] version;
+        "provenant_" + (builtins.replaceStrings ["."] ["_"] version);
 
       # Helper: build a provenant package from a per-tag JSON file
       mkProvenant = jsonFile: system:
