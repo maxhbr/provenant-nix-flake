@@ -8,6 +8,12 @@
 
   outputs = { self, nixpkgs, flake-utils }:
     let
+      index = builtins.fromJSON (builtins.readFile ./index.json);
+
+      # Convert "0.1.14" -> "0_1_14" for valid Nix attribute names
+      versionToAttrName = version:
+        builtins.replaceStrings ["."] ["_"] version;
+
       # Helper: build a provenant package from a per-tag JSON file
       mkProvenant = jsonFile: system:
         let
@@ -78,14 +84,18 @@
               };
             };
 
-      # ── Hardcoded version list ──────────────────────────────────────────
-      # Add a new entry here when a new tag JSON is added to ./jsons/
-      versions = {
-        "0_1_14" = ./jsons/0.1.14.json;
-      };
+      lib = nixpkgs.lib;
 
-      # The latest version — update when adding a new tag
-      latest = "0_1_14";
+      # Build version → path mapping from index.json with attr-safe names
+      # e.g. { "0_1_14" = ./jsons/0.1.14.json; }
+      attrNameMap = lib.mapAttrs'
+        (version: rel: {
+          name = versionToAttrName version;
+          value = ./. + "/${rel}";
+        })
+        index.versions;
+
+      latestAttrName = versionToAttrName index.latest;
 
     in
     flake-utils.lib.eachDefaultSystem (system:
@@ -93,10 +103,10 @@
         # Build one package per version
         versionPackages = builtins.mapAttrs
           (name: jsonFile: mkProvenant jsonFile system)
-          versions;
+          attrNameMap;
 
         # The "provenant" alias always points to the latest version
-        provenant = versionPackages.${latest};
+        provenant = versionPackages.${latestAttrName};
 
       in
       {

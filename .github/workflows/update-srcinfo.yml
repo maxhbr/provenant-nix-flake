@@ -28,7 +28,7 @@ jobs:
       - name: Check for changes
         id: diff
         run: |
-          if git diff --quiet jsons/; then
+          if git diff --quiet jsons/ index.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -37,11 +37,9 @@ jobs:
       - name: Commit and push changes
         if: steps.diff.outputs.changed == 'true'
         run: |
-          # Find the newest JSON file to extract version
-          NEWEST_JSON=$(ls -t jsons/*.json | head -1)
-          VERSION=$(jq -r '.version' "$NEWEST_JSON")
+          VERSION=$(jq -r '.latest' index.json)
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add jsons/
-          git commit -m "jsons: add v${VERSION}"
+          git add jsons/ index.json
+          git commit -m "update: add provenant v${VERSION}"
           git push
