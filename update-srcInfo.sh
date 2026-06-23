@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# update-srcInfo.sh - Fetch latest provenant release and update srcInfo.json
+# update-srcInfo.sh - Fetch provenant release info and create per-tag JSON files
 #
 # Usage:
 #   ./update-srcInfo.sh              # update to latest release
@@ -8,7 +8,9 @@
 set -euo pipefail
 
 REPO="mstykow/provenant"
-JSON_FILE="srcInfo.json"
+JSON_DIR="jsons"
+
+mkdir -p "$JSON_DIR"
 
 # ── Determine the target tag ──────────────────────────────────────────────
 if [ $# -eq 0 ]; then
@@ -26,8 +28,16 @@ else
 fi
 
 VERSION=$(echo "$TAG" | sed 's/^v//')  # strip leading 'v' from tag
+JSON_FILE="${JSON_DIR}/${VERSION}.json"
 
-echo "Updating srcInfo.json for tag: $TAG (version: $VERSION)"
+# ── Skip if JSON already exists ──────────────────────────────────────────
+if [ -f "$JSON_FILE" ]; then
+  echo "JSON for tag ${TAG} already exists: ${JSON_FILE}"
+  echo "Delete it manually if you want to re-fetch, then re-run."
+  exit 0
+fi
+
+echo "Creating ${JSON_FILE} for tag: ${TAG} (version: ${VERSION})"
 
 # ── Fetch SHA256 hashes from release assets ───────────────────────────────
 
@@ -65,7 +75,11 @@ for entry in "${entries[@]}"; do
   echo "  ✓ ${nix_platform}: ${sri_hash}"
 done
 
-# ── Write srcInfo.json ───────────────────────────────────────────────────
+# ── Write per-tag JSON ───────────────────────────────────────────────────
 echo "$TMP_JSON" | jq --sort-keys > "$JSON_FILE"
 
-echo "Done. Updated $JSON_FILE"
+echo "Done. Created ${JSON_FILE}"
+echo ""
+echo "⚠  Remember to:"
+echo "   1. Add the new version to the 'versions' attribute in flake.nix"
+echo "   2. Update 'latest' in flake.nix if this is the newest version"

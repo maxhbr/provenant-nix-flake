@@ -1,4 +1,4 @@
-name: Update srcInfo.json
+name: Update srcInfo
 
 on:
   schedule:
@@ -28,7 +28,7 @@ jobs:
       - name: Check for changes
         id: diff
         run: |
-          if git diff --quiet srcInfo.json; then
+          if git diff --quiet jsons/; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -37,9 +37,11 @@ jobs:
       - name: Commit and push changes
         if: steps.diff.outputs.changed == 'true'
         run: |
-          VERSION=$(jq -r '.version' srcInfo.json)
+          # Find the newest JSON file to extract version
+          NEWEST_JSON=$(ls -t jsons/*.json | head -1)
+          VERSION=$(jq -r '.version' "$NEWEST_JSON")
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add srcInfo.json
-          git commit -m "srcInfo.json: update to v${VERSION}"
+          git add jsons/
+          git commit -m "jsons: add v${VERSION}"
           git push
