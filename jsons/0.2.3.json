@@ -1,0 +1,21 @@
+{
+  "platforms": {
+    "aarch64-darwin": {
+      "hash": "sha256-nV6ldGEieKUjP1AbTlGq9fSIEBgs884BHgxe1Oif3JM=",
+      "url": "https://github.com/mstykow/provenant/releases/download/v0.2.3/provenant-macos-aarch64.tar.gz"
+    },
+    "aarch64-linux": {
+      "hash": "sha256-PAKHMfR3eCa6dEn3o2/THKY5uvH5gnJuOJKTbUNuls8=",
+      "url": "https://github.com/mstykow/provenant/releases/download/v0.2.3/provenant-linux-aarch64.tar.gz"
+    },
+    "x86_64-darwin": {
+      "hash": "sha256-5l1j3a75Q1VHJaRvMky823DCe80cmBhNxPY8LWrzKDM=",
+      "url": "https://github.com/mstykow/provenant/releases/download/v0.2.3/provenant-macos-x86_64.tar.gz"
+    },
+    "x86_64-linux": {
+      "hash": "sha256-TOGxkE6O5D0A/vnPgaH84nbPHpVYBKHtsK00o0ZkeUc=",
+      "url": "https://github.com/mstykow/provenant/releases/download/v0.2.3/provenant-linux-x86_64.tar.gz"
+    }
+  },
+  "version": "0.2.3"
+}
