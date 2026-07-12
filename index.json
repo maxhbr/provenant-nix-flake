@@ -1,11 +1,12 @@
 {
-  "latest": "0.2.3",
+  "latest": "0.2.4",
   "versions": {
     "0.1.14": "jsons/0.1.14.json",
     "0.1.15": "jsons/0.1.15.json",
     "0.2.0": "jsons/0.2.0.json",
     "0.2.1": "jsons/0.2.1.json",
     "0.2.2": "jsons/0.2.2.json",
-    "0.2.3": "jsons/0.2.3.json"
+    "0.2.3": "jsons/0.2.3.json",
+    "0.2.4": "jsons/0.2.4.json"
   }
 }
