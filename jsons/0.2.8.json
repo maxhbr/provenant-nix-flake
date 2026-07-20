@@ -1,0 +1,21 @@
+{
+  "platforms": {
+    "aarch64-darwin": {
+      "hash": "sha256-QdXHB/85EKsZYFiwPnKlz4aCgsUu9+8/uJCYJL1GNoM=",
+      "url": "https://github.com/mstykow/provenant/releases/download/v0.2.8/provenant-macos-aarch64.tar.gz"
+    },
+    "aarch64-linux": {
+      "hash": "sha256-8WepvnkgJhvBs6Yq4iv/8+rLX19eJ5rvFS39ieq3bpE=",
+      "url": "https://github.com/mstykow/provenant/releases/download/v0.2.8/provenant-linux-aarch64.tar.gz"
+    },
+    "x86_64-darwin": {
+      "hash": "sha256-GmMzMKqtVJx1YKRMHgOgjF2lAiHDE0HNWdR8joboOf0=",
+      "url": "https://github.com/mstykow/provenant/releases/download/v0.2.8/provenant-macos-x86_64.tar.gz"
+    },
+    "x86_64-linux": {
+      "hash": "sha256-mWll4RTgz4eSjNe0ICxfQCoca6w/cRoRW541vzFDyVY=",
+      "url": "https://github.com/mstykow/provenant/releases/download/v0.2.8/provenant-linux-x86_64.tar.gz"
+    }
+  },
+  "version": "0.2.8"
+}
