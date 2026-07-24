@@ -76,6 +76,7 @@ else
 
   # ── Write per-tag JSON ─────────────────────────────────────────────────
   echo "$TMP_JSON" | jq --sort-keys > "$JSON_FILE"
+  git add "$JSON_FILE" || true
   echo "Created ${JSON_FILE}"
 fi
 
