@@ -1,5 +1,5 @@
 {
-  "latest": "1.0.5",
+  "latest": "1.0.6",
   "versions": {
     "0.1.14": "jsons/0.1.14.json",
     "0.1.15": "jsons/0.1.15.json",
@@ -15,6 +15,7 @@
     "1.0.1": "jsons/1.0.1.json",
     "1.0.3": "jsons/1.0.3.json",
     "1.0.4": "jsons/1.0.4.json",
-    "1.0.5": "jsons/1.0.5.json"
+    "1.0.5": "jsons/1.0.5.json",
+    "1.0.6": "jsons/1.0.6.json"
   }
 }
